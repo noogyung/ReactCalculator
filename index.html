@@ -1,9 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" href="css/style.css"/>
+        <title>Converter</title>
+    </head>
+
     <body>
-        <div id="root">
-            
-        </div>
+        <div id="root"></div>
 
     </body>
     <script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
@@ -11,6 +17,11 @@
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     
     <script type="text/babel">
+        const units ={
+            minutesToHours: 60,
+            kmToMiles: 1.609344,
+            cmToInch: 2.54
+        }
         
         function MinutesToHours(){
             const [amount, setAmount] = React.useState(0);
@@ -27,11 +38,12 @@
 
             return(
                 <div>
+                    <h3>Minutes To Hours</h3>
                     <label htmlFor="minutes">Minutes</label>
-                    <input value={flipped ? amount * 60 : amount} onChange={onChange} disabled={flipped} id="minutes" placeholder ="Minutes" type="number"/>
+                    <input value={flipped ? amount * units.minutesToHours : amount} onChange={onChange} disabled={flipped} id="minutes" placeholder ="Minutes" type="number"/>
 
                     <label htmlFor="hours">Hours</label>
-                    <input value={!flipped ? Math.round(amount/60) : amount} onChange={onChange} disabled={!flipped} id="hours" placeholder ="Hourss" type="number"/>
+                    <input value={!flipped ? Math.round(amount/units.minutesToHours) : amount} onChange={onChange} disabled={!flipped} id="hours" placeholder ="Hourss" type="number"/>
 
                     <button onClick={reset}>Reset</button>
                     <button onClick={onFlip}>Flip</button>
@@ -40,7 +52,56 @@
             )
         }
         function KmToMiles() {
-            return <h3>KM to Miles</h3>
+            const [amount, setAmount] = React.useState(0);
+            const onChange = (event) =>{
+                setAmount(event.target.value);
+            };
+            const reset = () => setAmount(0);
+            //스위치
+            const [flipped, setFlipped] = React.useState(false);
+            const onFlip = () => {
+                reset();
+                setFlipped((current) => !current);
+            }
+            return (
+                <div>
+                    <h3>KM to Miles</h3>
+                    <label htmlFor="kilometer">Kilometer</label>
+                    <input value={flipped ? (amount * units.kmToMiles).toFixed(2) : amount} onChange={onChange} disabled={flipped} id="kilometer" placeholder ="Kilometer" type="number"/>
+
+                    <label htmlFor="miles">Miles</label>
+                    <input value={!flipped ? (amount/units.kmToMiles).toFixed(2) : amount} onChange={onChange} disabled={!flipped} id="miles" placeholder ="Miles" type="number"/>
+
+                    <button onClick={reset}>Reset</button>
+                    <button onClick={onFlip}>Flip</button>
+                </div>
+                )
+        }
+        function CmToInch(){
+            const [amount, setAmount] = React.useState(0);
+            const onChange = (event) =>{
+                setAmount(event.target.value);
+            };
+            const reset = () => setAmount(0);
+            //스위치
+            const [flipped, setFlipped] = React.useState(false);
+            const onFlip = () => {
+                reset();
+                setFlipped((current) => !current);
+            }
+            return (
+                <div>
+                    <h3>CM to Inch</h3>
+                    <label htmlFor="centimeter">Centimeter</label>
+                    <input value={flipped ? (amount * units.cmToInch).toFixed(2) : amount} onChange={onChange} disabled={flipped} id="centimeter" placeholder ="Centimeter" type="number"/>
+
+                    <label htmlFor="inch">Inch</label>
+                    <input value={!flipped ? (amount/units.cmToInch).toFixed(2) : amount} onChange={onChange} disabled={!flipped} id="inch" placeholder ="Inch" type="number"/>
+
+                    <button onClick={reset}>Reset</button>
+                    <button onClick={onFlip}>Flip</button>
+                </div>
+                )
         }
 
         const root = document.getElementById("root");
@@ -50,15 +111,17 @@
                 setIndex(event.target.value);
             }
             return(
-                <div>
+                <div id="container">
                     <h1>Converter</h1>
                     <select value ={index} onChange = {onSelect}>
                         <option value ="0">Minutes to Hours</option>
                         <option value ="1">KM to Miles</option>
+                        <option value ="2">CM to Inch</option>
                     </select>
                     <hr/>
                     {index === "0" ? <MinutesToHours/> : null}
                     {index === "1" ? <KmToMiles/> : null}
+                    {index === "2" ? <CmToInch/> : null}
                 </div>
             )
         }
