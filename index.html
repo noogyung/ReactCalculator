@@ -22,7 +22,6 @@
             kmToMiles: 1.609344,
             cmToInch: 2.54
         }
-        
         function MinutesToHours(){
             const [amount, setAmount] = React.useState(0);
             const onChange = (event) =>{
@@ -103,8 +102,6 @@
                 </div>
                 )
         }
-
-        const root = document.getElementById("root");
         function App(){
             const [index, setIndex] = React.useState("0");
             const onSelect = (event) =>{
@@ -126,6 +123,37 @@
             )
         }
         
+
+        // function Btn({text, onClick}){
+        //     return (
+        //             <button
+        //         onClick={onClick}    
+        //         style ={{
+        //                 backgroundColor: "green",
+        //                 color : "white",
+        //                 padding : "10px 20px",
+        //                 border: 0, borderRadius: 20
+        //             }}
+        //         >
+        //         {text}
+        //         </button>
+        //     );
+        // }
+
+        // const MemorizedBtn = React.memo(Btn);
+
+        // function App(){
+        //     const[value, setValue] = React.useState("Save Changes");
+        //     const changeValue = ()=> setValue("Revert Changes");
+        //     return (
+        //         <div>
+        //             <MemorizedBtn text={value} onClick={changeValue}/> 
+        //             <MemorizedBtn text="Confirm"/>
+        //         </div>
+        //     );
+            
+        // }
+        const root = document.getElementById("root");
         ReactDOM.render(<App/>, root);
     </script>
 
